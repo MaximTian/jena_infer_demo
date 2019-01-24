@@ -18,63 +18,59 @@ src文件夹下demo文件夹
 1. jenaMain：程序主体
 2. utils：基本的数据处理模块，包含输入格式的转换、文件的读取。
 
-resources文件
+### resources文件说明
 
-1. rawData文件夹：主要存放三元组数据triple_data.txt和查询文件query.txt
-   - triple_data格式为：[entity1 entity2 relation], 以tab分隔。格式转换的内容保存在triple_data.ttl文件中
-   - query格式为：entity。即待推理的实体名称列表
-2. demo.rules文件：推理规则文件，里面的公式均人为定义
-3. query_result.txt：实体查询的结果
-4. triple_data.ttl：由triple_data.txt生成的ttl格式文件
+1. 文件结构
+    - rawData文件夹：主要存放知识库已有三元组数据triple_data.txt和待推理的实体文件query.txt
+        - triple_data格式为：[entity1 entity2 relation], 以tab分隔。在推理时，会被转换为triple_data.ttl文件
+        - query格式为：entity。即待推理的实体列表
+    - demo.rules文件：推理规则文件，里面的公式均人为定义
+    - query_result.txt：待推理实体的推理结果
+    - triple_data.ttl：在推理过程中，程序将已有三元组数据triple_data.txt自动转换而来的ttl格式中间文件
 
-### 使用说明
+2. demo.rules规则文件格式说明
 
-1. demo.rules规则文件格式说明：
+    规则格式如下：
 
-规则格式如下：
+    [rule_name: (?A relation:r1 ?B), (?A relation:r2 ?C), ... -> (?B relation: rn, ?C), ...]
 
-[rule_name: (?A relation:r1 ?B), (?A relation:r2 ?C), ... -> (?B relation: rn, ?C), ...]
+    规则推理以"->"为标识符，左边为已有的规则(可以多条规则)，右边为推理的规则(可多条规则)。
 
-规则推理以"->"为标识符，左边为已有的规则(可以多条规则)，右边为推理的规则(可多条规则)。
+    示例:
 
-示例:
+    ```html
+    [r2: (?A relation:丈夫 ?B), (?A relation:儿子 ?C) -> (?B relation:儿子 ?C)]
+    ```
 
-```html
-[r2: (?A relation:丈夫 ?B), (?A relation:儿子 ?C) -> (?B relation:儿子 ?C)]
-```
-2. ttl文件格式说明：
+3. ttl文件格式说明：
 
-ttl文件开头部分需要声明各种元素的命名以及对应的url。格式如下：
+    ttl文件开头部分需要声明各种元素的命名以及对应的url。格式如下：
 
-@prefix value_name:   url
+    @prefix value_name:   url
 
-示例：
+    示例：
 
-```html
-@prefix entity:   <http://jena_demo/entity#> .
-```
+    ```html
+    @prefix entity:   <http://jena_demo/entity#> .
+    ```
 
-这里value_name为entity， "< http://jena_demo/entity# > ."为url部分，注意必须以" ."结尾。
+    这里value_name为entity， "< http://jena_demo/entity# > ."为url部分，注意必须以" ."结尾。
 
-关系三元组格式为：
+    关系三元组格式为：
 
-value_name: e1 relation_name: r1 value_name: e2 （tab分隔）
+    value_name: e1 relation_name: r1 value_name: e2 （tab分隔）
 
-示例：
+    示例：
 
-```html
-entity:张飞   relation:二哥    entity:关羽 .
-```
-
-3. 查询文件
-
-查询文件主要输入待推理的实体对象。jena通过读入待推理对象，可自动根据规则输出与该对象相关的规则。查询文件为resources/rawData/query.txt
+    ```html
+    entity:张飞   relation:二哥    entity:关羽 .
+    ```
 
 4. 查询结果
 
-文件的输出内容主要存放在query_result.txt中，基本格式为：
+    文件的输出内容主要存放在query_result.txt中，基本格式为：
 
-(entity1，relation1，entity2)
+    (entity1，relation1，entity2)
 
 ### 运行流程
 
