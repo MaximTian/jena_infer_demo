@@ -1,0 +1,13 @@
+@prefix entity:   <http://jena_demo/entity#> .
+@prefix relation:  <http://jena_demo/relation#> .
+
+entity:张飞	relation:二哥	entity:关羽 .
+entity:张飞	relation:大哥	entity:刘备 .
+entity:卞氏	relation:丈夫	entity:曹操 .
+entity:卞氏	relation:儿子	entity:曹丕 .
+entity:阿里巴巴	relation:控股	entity:蚂蚁金服 .
+entity:蚂蚁金服	relation:投资	entity:哈罗单车 .
+entity:哈罗单车	relation:摩拜单车	entity:竞争 .
+entity:腾讯	relation:控股	entity:美团 .
+entity:美团	relation:投资	entity:摩拜单车 .
+entity:摩拜单车	relation:竞争	entity:哈罗单车 .
